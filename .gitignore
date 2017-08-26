@@ -1,0 +1,4 @@
+data/
+etc/
+__pycache__
+*.pyc
