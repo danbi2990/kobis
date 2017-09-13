@@ -2,8 +2,7 @@ import os
 import json
 import requests
 from json_file import JsonFile
-
-BASEDIR = os.path.join(os.path.dirname(__file__), "data")
+from settings import DATA_DIR
 
 
 class BaseAPI:
@@ -13,13 +12,15 @@ class BaseAPI:
             "base": "",
             "daily_boxoffice": "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json",
             "weekly_boxoffice": "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchWeeklyBoxOfficeList.json",
-            "code_list": "http://www.kobis.or.kr/kobisopenapi/webservice/rest/code/searchCodeList.json",
-            "movie_list": "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json",
-            "movie_info": "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json",
+            "codes": "http://www.kobis.or.kr/kobisopenapi/webservice/rest/code/searchCodeList.json",
+            "movies": "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json",
+            "movie_details": "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json",
+            "companies": "http://www.kobis.or.kr/kobisopenapi/webservice/rest/company/searchCompanyList.json",
+            "people": "http://www.kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json",
         }
         self.url = self.urls[self.api_name]
         self.params = {"key": "8ed1be3a773c6b4e6bccb8fe28296f98"}
-        self.data_dir = os.path.join(BASEDIR, self.api_name)
+        self.data_dir = os.path.join(DATA_DIR, self.api_name)
         self.response = ""
 
     def api_call(self):
@@ -33,17 +34,23 @@ class BaseAPI:
         file.save(data)
 
     def make_path(self):
+        # self.path = os.path.join(self.data_dir, self.api_name + "_")
         raise NotImplementedError
 
 
-class MovieList(BaseAPI):
+class Movies(BaseAPI):
 
-    def __init__(self):
-        self.api_name = "movie_list"
+    def __init__(self, curPage, itemPerPage):
+        self.api_name = "movies"
         super().__init__()
+        self.params["curPage"] = curPage
+        self.params["itemPerPage"] = itemPerPage
 
     def make_path(self):
-        self.path = os.path.join(self.data_dir, self.api_name + "_" +)
+        self.path = os.path.join(self.data_dir,
+                                 self.api_name + "_" +
+                                 self.params["curPage"] + "_" +
+                                 self.params["itemPerPage"] + ".json")
 
 
 class DailyBoxoffice(BaseAPI):
@@ -54,4 +61,36 @@ class DailyBoxoffice(BaseAPI):
         self.params["targetDt"] = targetDt
 
     def make_path(self):
-        self.path = os.path.join(self.data_dir, self.api_name + "_" + self.params["targetDt"] + ".json")
+        self.path = os.path.join(self.data_dir,
+                                 self.api_name + "_" +
+                                 self.params["targetDt"] + ".json")
+
+
+class Companies(BaseAPI):
+
+    def __init__(self, curPage, itemPerPage):
+        self.api_name = "companies"
+        super().__init__()
+        self.params["curPage"] = curPage
+        self.params["itemPerPage"] = itemPerPage
+
+    def make_path(self):
+        self.path = os.path.join(self.data_dir,
+                                 self.api_name + "_" +
+                                 self.params["curPage"] + "_" +
+                                 self.params["itemPerPage"] + ".json")
+
+
+class People(BaseAPI):
+
+    def __init__(self, curPage, itemPerPage):
+        self.api_name = "people"
+        super().__init__()
+        self.params["curPage"] = curPage
+        self.params["itemPerPage"] = itemPerPage
+
+    def make_path(self):
+        self.path = os.path.join(self.data_dir,
+                                 self.api_name + "_" +
+                                 self.params["curPage"] + "_" +
+                                 self.params["itemPerPage"] + ".json")
