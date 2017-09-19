@@ -12,7 +12,7 @@ class TestDailyBoxoffice(unittest.TestCase):
         pass
 
     def test_save_file(self):
-        api = DailyBoxoffice("20170824")
+        api = DailyBoxoffice("20170918")
         api.save_data()
 
     @unittest.skip("Test skipped")

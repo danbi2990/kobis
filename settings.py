@@ -4,20 +4,12 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'kobis',
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'dnwls895',
-    #     'HOST': 'localhost',
-    #     'PORT': '5432',
-    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kobis',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'danbi',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }

@@ -13,7 +13,6 @@ from kobis.models import (
     Movies,
 )
 
-
 #Add user
 # user = User(name="masnun", email="masnun@gmail.com")
 # user.save()
